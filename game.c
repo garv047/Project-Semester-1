@@ -5,14 +5,15 @@ struct Player
     char name[30];
     int health;
     int xp;
-    int gold;
+    int coins;
 };
 
-void fight(struct Player *p);
-void heal(struct Player *p);
-void explore(struct Player *p);
+void fight(struct Player *g);
+void heal(struct Player *g);
+void explore(struct Player *g);
 
-void fight(struct Player *p)
+
+void fight(struct Player *g)
 {
     int difficulty;
     printf("\nEnter enemy difficulty (1-5): ");
@@ -27,28 +28,28 @@ void fight(struct Player *p)
 
     printf("You fought bravely! Took %d damage, gained %d XP.\n", damage, reward);
 
-    p->health -= damage;
-    p->xp += reward;
-    p->gold += difficulty * 2;
+    g->health -= damage;
+    g->xp += reward;
+    g->coins += difficulty * 2;
 }
 
-void heal(struct Player *p)
+void heal(struct Player *g)
 {
-    if (p->gold >= 5)
+    if (g->coins >= 5)
     {
-        printf("\nYou spend 5 gold to heal +25 HP.\n");
-        p->health += 25;
-        p->gold -= 5;
-        if (p->health > 100)
-            p->health = 100;
+        printf("\nYou spend 5 coins to heal +25 HP.\n");
+        g->health += 25;
+        g->coins -= 5;
+        if (g->health > 100)
+            g->health = 100;
     }
     else
     {
-        printf("\nNot enough gold to heal!\n");
+        printf("\nNot enough coins to heal!\n"); 
     }
 }
 
-void explore(struct Player *p)
+void explore(struct Player *g)
 {
     int choice;
     printf("\nYou are exploring...\n");
@@ -57,18 +58,18 @@ void explore(struct Player *p)
 
     if (choice == 1)
     {
-        printf("You found 10 gold!\n");
-        p->gold += 10;
+        printf("You found 10 coins!\n");
+        g->coins += 10;
     }
     else if (choice == 2)
     {
         printf("You met a kind villager! +5 XP.\n");
-        p->xp += 5;
+        g->xp += 5;
     }
     else if (choice == 3)
     {
         printf("Oh no! You fell into a trap. -15 HP.\n");
-        p->health -= 15;
+        g->health -= 15;
     }
     else
     {
@@ -85,7 +86,7 @@ int main(void)
 
     player.health = 100;
     player.xp = 0;
-    player.gold = 10;
+    player.coins = 10;
 
     int choice;
 
@@ -93,7 +94,7 @@ int main(void)
 
     while (player.health > 0)
     {
-        printf("\n💪 Health: %d | ⭐ XP: %d | 💰 Gold: %d\n", player.health, player.xp, player.gold);
+        printf("\n💪 Health: %d | ⭐ XP: %d | 💰 coins: %d\n", player.health, player.xp, player.coins);
         printf("Choose an action:\n");
         printf("1. Explore 🌍\n2. Fight 🐉\n3. Heal 💊\n4. Quit ❌\n> ");
         scanf("%d", &choice);
